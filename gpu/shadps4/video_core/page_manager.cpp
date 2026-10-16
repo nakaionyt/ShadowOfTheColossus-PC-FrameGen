@@ -635,8 +635,18 @@ struct SignalImpl : public PageManager::Impl {
         RENDERER_TRACE;
         auto* memory = Core::Memory::Instance();
         auto& impl = memory->GetAddressSpace();
-        ASSERT_MSG(perms != Core::MemoryPermission::Write,
-                   "Attempted to protect region as write-only which is not a valid permission");
+        // sotc: a page read-tracked (GPU data not read back yet) whose write tracking was dropped
+        // asks for write-only, which x86 pages cannot be: this assert stopped the game (exit 0x17,
+        // once at the title screen). Protect it fully instead: a read faults into the readback as
+        // intended, a write faults and RepairStuckWriteFault resolves it if it keeps recurring.
+        if (perms == Core::MemoryPermission::Write) [[unlikely]] {
+            static std::atomic<u32> reported{0};
+            if (reported.fetch_add(1, std::memory_order_relaxed) < 8) {
+                LOG_WARNING(Render, "Write-only protection of {:#x}+{:#x}, protecting fully",
+                            address, size);
+            }
+            perms = Core::MemoryPermission::None;
+        }
         // sotc: the walker's clean-load bitmap follows the read protection: set before
         // protecting, cleared after unprotecting (a stale bit only costs a clean load).
         const bool read_protected = False(perms & Core::MemoryPermission::Read);
