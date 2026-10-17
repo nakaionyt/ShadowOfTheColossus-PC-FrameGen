@@ -28,8 +28,10 @@ bool HandleEvent(const SDL_Event& event);
 /// Whether anything is drawn this frame (a game dialog or the FPS counter).
 bool Visible();
 
-/// Present thread: draws into `view` (layout ColorAttachmentOptimal).
-void Render(vk::CommandBuffer cmdbuf, vk::ImageView view, vk::Extent2D extent);
+/// Present thread: draws into `view` (layout ColorAttachmentOptimal). `game_frame` false: a
+/// generated frame (FSR 3), not counted by the FPS readout.
+void Render(vk::CommandBuffer cmdbuf, vk::ImageView view, vk::Extent2D extent,
+            bool game_frame = true);
 
 /// A text entry or the save list is shown: the game's input is held neutral.
 bool CapturesInput();
