@@ -1,7 +1,7 @@
 <h1 align="center">Shadow of the Colossus — native PC port, with frame generation</h1>
 
 <p align="center">
-  <a href="https://github.com/Neuilleasf/ShadowOfTheColossus-PC-FrameGen/releases/latest"><img alt="Download" src="https://img.shields.io/github/v/release/Neuilleasf/ShadowOfTheColossus-PC-FrameGen?label=download&style=for-the-badge&color=4f6e45"></a>
+  <a href="https://github.com/nakaionyt/ShadowOfTheColossus-PC-FrameGen/releases/latest"><img alt="Download" src="https://img.shields.io/github/v/release/nakaionyt/ShadowOfTheColossus-PC-FrameGen?label=download&style=for-the-badge&color=4f6e45"></a>
   <img alt="Windows 10/11" src="https://img.shields.io/badge/Windows-10%20%7C%2011-3e5f73?style=for-the-badge">
   <img alt="Vulkan 1.3" src="https://img.shields.io/badge/Vulkan-1.3-3e5f73?style=for-the-badge">
   <img alt="DLSS-G and FSR 3" src="https://img.shields.io/badge/frame%20gen-DLSS--G%20%7C%20FSR%203-4f6e45?style=for-the-badge">
@@ -61,7 +61,7 @@ The game logic follows real time: uncapped, Wander runs at the same speed as cap
 ## Quick start
 
 1. Download `SotC-PC_v0.57-fg1_bring-your-own-game-files.zip` from
-   [Releases](https://github.com/Neuilleasf/ShadowOfTheColossus-PC-FrameGen/releases/latest) and
+   [Releases](https://github.com/nakaionyt/ShadowOfTheColossus-PC-FrameGen/releases/latest) and
    unzip it anywhere.
 2. Install Microsoft's
    [Visual C++ Redistributable 2015–2022 x64](https://learn.microsoft.com/cpp/windows/latest-supported-vc-redist)
@@ -102,7 +102,7 @@ Known issues:
 - Switching saves without restarting the game can close it: restart before loading another save.
 - In places the water stays dark or flat.
 - FSR 3 was tested on an NVIDIA card; on AMD and Intel it is less tested. Feedback welcome in
-  [Issues](https://github.com/Neuilleasf/ShadowOfTheColossus-PC-FrameGen/issues).
+  [Issues](https://github.com/nakaionyt/ShadowOfTheColossus-PC-FrameGen/issues).
 - FSR 3 is a little less clean than DLSS-G when the camera turns fast (slight ghosting).
 
 If anything looks wrong: press **F8** until frame generation is *off*, or set it to *Off* in the
@@ -133,7 +133,7 @@ Windows with [MSYS2](https://www.msys2.org/) (CLANG64); package list in
 Python with PyInstaller and Pillow (`WINPYTHON`).
 
 ```bash
-git clone --recursive https://github.com/Neuilleasf/ShadowOfTheColossus-PC-FrameGen.git
+git clone --recursive https://github.com/nakaionyt/ShadowOfTheColossus-PC-FrameGen.git
 bash build.sh                              # out/bb-probe.exe
 bash packaging/windows/package_sotc.sh     # dist/SotC-PC.zip
 ```
