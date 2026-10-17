@@ -60,7 +60,7 @@ The game logic follows real time: uncapped, Wander runs at the same speed as cap
 
 ## Quick start
 
-1. Download `SotC-PC_v0.57-fg1_bring-your-own-game-files.zip` from
+1. Download `SotC-PC_v0.57-fg2_bring-your-own-game-files.zip` from
    [Releases](https://github.com/nakaionyt/ShadowOfTheColossus-PC-FrameGen/releases/latest) and
    unzip it anywhere.
 2. Install Microsoft's
