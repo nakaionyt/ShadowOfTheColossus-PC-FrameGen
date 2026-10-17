@@ -16,7 +16,7 @@ hidden=()
 for module in argparse base64 collections hashlib json re shutil struct; do
     hidden+=(--hidden-import "$module")
 done
-"$python" -m PyInstaller --noconfirm --clean --log-level WARN --windowed --name SotC \
+"$python" -m PyInstaller --noconfirm --clean --log-level WARN --windowed --name SotC --exclude-module numpy \
     --icon "$(cygpath -w "$PWD/launcher/sotc.ico")" --distpath out/pyi-dist --workpath out/pyi-work \
     --specpath out/pyi-work --paths "$(cygpath -w "$PWD/scripts")" "${hidden[@]}" \
     "$(cygpath -w "$PWD/launcher/sotc_launcher_win.py")"

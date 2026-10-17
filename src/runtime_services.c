@@ -236,7 +236,7 @@ static int save_list_show(int selected, uint32_t focus, const char *focus_dir) {
     int n=0, latest=-1, oldest=-1, named=-1;
     int64_t latest_time=INT64_MIN, oldest_time=INT64_MAX;
     if (save_dialog.has_new) {
-        snprintf(lines[n],sizeof(lines[n]),"%s","+  Nova grava\xc3\xa7\xc3\xa3o");
+        snprintf(lines[n],sizeof(lines[n]),"%s","+  New save");
         line_ptrs[n]=lines[n]; ++n;
     }
     save_dialog.shown=0;
@@ -264,8 +264,8 @@ static int save_list_show(int selected, uint32_t focus, const char *focus_dir) {
         default: selected=0; break;                                   /* list head */
         }
     }
-    const char *title=save_dialog.disp==1 ? "Gravar jogo  /  Save game"
-                      : save_dialog.disp==2 ? "Carregar jogo  /  Load game" : "Apagar  /  Delete";
+    const char *title=save_dialog.disp==1 ? "Save game"
+                      : save_dialog.disp==2 ? "Load game" : "Delete";
     return n && bbgpu_save_list_open(title,line_ptrs,n,selected,first_data);
 }
 /* sotc: SaveDataDialog messages (every mode but the list). What Shadow of the Colossus opens
@@ -341,16 +341,16 @@ static void save_yes_no(const char *msg, const char *disp_name) {
     const char *ask=getenv("SOTC_SAVE_PROMPT");
     if (!ask || strcmp(ask,"auto")) {
         static char title[1400];
-        const char *fallback=save_dialog.kind==MSG_RESTORE ? "Restaurar o backup deste save?"
-                           : save_dialog.kind==MSG_CORRUPTED ? "Os dados deste save est\xc3\xa3o corrompidos. Apagar?"
-                           : "Continuar?";
+        const char *fallback=save_dialog.kind==MSG_RESTORE ? "Restore the backup of this save?"
+                           : save_dialog.kind==MSG_CORRUPTED ? "This save data is corrupted. Delete it?"
+                           : "Continue?";
         int n=snprintf(title,sizeof(title),"%s",msg && *msg ? msg : fallback);
         if (n<0 || (size_t)n>=sizeof(title)) n=0;
         if (save_dialog.kind==MSG_CORRUPTED && !copied)
-            snprintf(title+n,sizeof(title)-n,"\n\nUma c\xc3\xb3pia foi guardada em:\n%s",kept);
+            snprintf(title+n,sizeof(title)-n,"\n\nA copy was kept in:\n%s",kept);
         else if (save_dialog.kind==MSG_CORRUPTED)
-            snprintf(title+n,sizeof(title)-n,"%s","\n\nN\xc3\xa3o foi poss\xc3\xadvel guardar uma c\xc3\xb3pia: Sim apaga o save.");
-        const char *const choices[2]={"Sim  /  Yes","N\xc3\xa3o  /  No"};
+            snprintf(title+n,sizeof(title)-n,"%s","\n\nNo copy could be kept: Yes deletes the save.");
+        const char *const choices[2]={"Yes","No"};
         if (bbgpu_save_list_open(title,choices,2,yes ? 0 : 1,-1)) {
             save_dialog.prompt=1; dialogs[2].status=2; /* running until answered (save_status) */
             return;
@@ -449,7 +449,7 @@ static ABI int32_t save_open(const void *p) {
 }
 static ABI int32_t save_status(void) {
     if (save_dialog.prompt && dialogs[2].status==2) {
-        const int r=bbgpu_save_list_poll(); /* 0 Sim, 1 Nao, -2 Esc (= No) */
+        const int r=bbgpu_save_list_poll(); /* 0 Yes, 1 No, -2 Esc (= No) */
         if (r!=-1) save_answer(r==0,"asked");
         return dialogs[2].status;
     }

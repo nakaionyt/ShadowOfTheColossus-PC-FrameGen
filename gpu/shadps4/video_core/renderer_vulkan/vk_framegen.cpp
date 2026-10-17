@@ -156,7 +156,7 @@ void TestTick() {
 const char* Name(Mode mode) {
     switch (mode) {
     case Mode::Off:
-        return "désactivée";
+        return "off";
     case Mode::Dlss:
         return "DLSS-G";
     case Mode::Fsr:
